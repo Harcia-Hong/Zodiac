@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da276f35f605ac45a687e62c1a99121, type: 3}
+  m_Name: EnhanceHP
+  m_EditorClassIdentifier: 
+  rewardID: Enhance HP
+  rewardName: "\uB048\uC9C8\uAE34 \uC0DD\uBA85"
+  description: "\uCCB4\uB825, \uCCB4\uB825 \uC7AC\uC0DD, \uD761\uD608 \uBAA8\uB450
+    \uC99D\uAC00"
+  rarity: 2
+  category: 0
+  rewardType: 1
+  valueType: 0
+  baseValue: 5
+  targetStat: 0
+  multiStats:
+  - statType: 1
+    value: 40
+    valueType: 1
+  - statType: 10
+    value: 2
+    valueType: 1
+  - statType: 11
+    value: 1.5
+    valueType: 0
+  iconSprite: {fileID: 0}
+  cardBackground: {fileID: 0}

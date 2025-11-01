@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3650b892c1a327f44bb1472bd4fdcd29, type: 3}
+  m_Name: ChargeEnemyData
+  m_EditorClassIdentifier: 
+  enemyName: Charge Enemy
+  enemyType: 1
+  baseSpeed: 4
+  baseRotationDamping: 10
+  detectRadius: 10
+  chasingRange: 15
+  attackRange: 4
+  damage: 25
+  attackForce: 5
+  attackCooldown: 1.5
+  maxHealth: 100
+  forceTransitionTime: 0.3
+  dealingStartTransitionTime: 0.5
+  dealingEndTransitionTime: 0.8

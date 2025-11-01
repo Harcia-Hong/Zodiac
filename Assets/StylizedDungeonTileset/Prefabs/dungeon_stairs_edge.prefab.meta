@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d8bbdd62c6b5869429693e23c1044d31
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Prefabs/dungeon_stairs_edge.prefab
+  uploadId: 772780

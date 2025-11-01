@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b6ab1d569bf40e245a4b7185554a559b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Tilesets/StylizedDungeonWallArch.asset
+  uploadId: 772780

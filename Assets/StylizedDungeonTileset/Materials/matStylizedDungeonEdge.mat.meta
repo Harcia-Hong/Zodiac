@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6d4686d7e6ef54e4dbcbe11b0285eb24
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Materials/matStylizedDungeonEdge.mat
+  uploadId: 772780

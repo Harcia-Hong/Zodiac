@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e61082c23497fc84b8e0d77c334e3866
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Prefabs/dungeon_base_edge.prefab
+  uploadId: 772780

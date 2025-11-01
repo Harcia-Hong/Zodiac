@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a384a1c769eba0a4aaaf23275f67ba86, type: 3}
+  m_Name: MainRewardDataBase
+  m_EditorClassIdentifier: 
+  allRewards:
+  - {fileID: 11400000, guid: 1255298955c767e4aaf0c2ebfe9a08ab, type: 2}
+  - {fileID: 11400000, guid: c83055bd37015c14997072c86d0aef84, type: 2}
+  - {fileID: 11400000, guid: 61b6de8155fdeb74994ecd65a60230b5, type: 2}
+  - {fileID: 11400000, guid: 4a12c7cbe58e3d1478c2640ba8d8cd6c, type: 2}
+  - {fileID: 11400000, guid: 64834f0b04f49d5499954cdff81c7d79, type: 2}
+  - {fileID: 11400000, guid: 8116c8bdb9e158f4abe2afc9d35275e0, type: 2}
+  - {fileID: 11400000, guid: f00b88b361003c1429b2dfd67da8fab2, type: 2}
+  - {fileID: 11400000, guid: fc6241d44afcef44683ffd25493a4ab5, type: 2}
+  - {fileID: 11400000, guid: c3d3875791c539441ae458899634c10c, type: 2}
+  - {fileID: 11400000, guid: a888d057ac7fdfa44ba6c1e3c9092f1b, type: 2}
+  - {fileID: 11400000, guid: 0d02b3fca8ad6e2478bacf6e2190e260, type: 2}
+  - {fileID: 11400000, guid: efc8fa010d9116f41a258a5c8e9f2131, type: 2}
+  - {fileID: 11400000, guid: 9fd10d5d383c63d418100e7561023588, type: 2}
+  - {fileID: 11400000, guid: fa81b68f16bfe98479ec61f895305416, type: 2}
+  - {fileID: 11400000, guid: e016b3158f6fc37418bb228faa53d1d7, type: 2}
+  - {fileID: 11400000, guid: 326e9cc6e6f382f4092e69023381841a, type: 2}
+  - {fileID: 11400000, guid: db3f2e4f96cd98e40ba216fddfb6f288, type: 2}
+  - {fileID: 11400000, guid: 8f6768c3310412542b56abf060e0f5f0, type: 2}
+  - {fileID: 11400000, guid: d08f3997d9a55f446a2260604527522d, type: 2}
+  - {fileID: 11400000, guid: 6d77ddde0adb60d45975edf9e2cfd30b, type: 2}
+  - {fileID: 11400000, guid: 6574e5aa37223934e96cadbbc8f40522, type: 2}
+  - {fileID: 11400000, guid: 6250f944cc35aed4b977cdc3b79214f5, type: 2}
+  - {fileID: 11400000, guid: 124b8ab80ca2ac541acd940d8817f523, type: 2}
+  - {fileID: 11400000, guid: 5339e8e1a21b02542a1e07fe1bff047b, type: 2}
+  - {fileID: 11400000, guid: 6ff7a57366a927f4a83712f5a2ae60e4, type: 2}
+  - {fileID: 11400000, guid: f1bd11666f8d3f3439a3c803e9a1fcf2, type: 2}
+  debugInfo: "Common: 8\uAC1C | Uncommon: 10\uAC1C | Rare: 8\uAC1C | Epic: 0\uAC1C
+    | Legendary: 0\uAC1C"

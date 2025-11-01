@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cd50a601edf55244fb235a7d96c991ca
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Sample/StylizedDungeonConfiguration.asset
+  uploadId: 772780

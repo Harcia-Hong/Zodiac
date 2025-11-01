@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c9715826d5584d74898a9abff2c24030
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Prefabs/dungeon_stairs_mergedCorner.prefab
+  uploadId: 772780

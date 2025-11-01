@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4e00826a940bfc7408f4fcfd1ef3549c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Prefabs/dungeon_stairs_interiorCorner.prefab
+  uploadId: 772780

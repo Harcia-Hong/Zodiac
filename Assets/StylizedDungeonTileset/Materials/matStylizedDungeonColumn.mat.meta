@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 309e1a737113c8747afda918bd8eaee0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Materials/matStylizedDungeonColumn.mat
+  uploadId: 772780

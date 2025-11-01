@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 892fddca33c0da8448b50891b594c21a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Materials/matStylizedDungeonWallMergedCorner.mat
+  uploadId: 772780

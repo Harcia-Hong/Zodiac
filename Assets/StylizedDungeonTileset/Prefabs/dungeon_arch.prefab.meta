@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: aae6f9b43ebf1004e9561c9175546c2e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Prefabs/dungeon_arch.prefab
+  uploadId: 772780

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3dc307cd2b0bb0843acb3e073faf5638
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Materials/matStylizedDungeonStairsEdge.mat
+  uploadId: 772780

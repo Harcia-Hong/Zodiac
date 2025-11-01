@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e79334904c1ac6b46a5745624ef40b7d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Prefabs/dungeon_wall_mergedCorner.prefab
+  uploadId: 772780

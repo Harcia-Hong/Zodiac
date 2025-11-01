@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f0a4f2b4a92100f41a7886ee84e23f4a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Materials/matStylizedDungeonInteriorBridge.mat
+  uploadId: 772780

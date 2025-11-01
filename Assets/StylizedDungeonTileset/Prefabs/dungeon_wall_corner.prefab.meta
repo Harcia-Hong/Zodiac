@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 666260362d185c24cacd04e3016e1c9f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Prefabs/dungeon_wall_corner.prefab
+  uploadId: 772780

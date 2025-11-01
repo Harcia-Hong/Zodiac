@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a6923492f5de2e24f8800a1c6067ba34
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324835
+  packageName: Stylized Dungeon Tileset
+  packageVersion: 1.0
+  assetPath: Assets/StylizedDungeonTileset/Prefabs/dungeon_wall_edge.prefab
+  uploadId: 772780
