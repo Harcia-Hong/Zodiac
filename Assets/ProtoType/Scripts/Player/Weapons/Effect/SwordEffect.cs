@@ -10,9 +10,11 @@ public class SwordEffect : MonoBehaviour, IEffect
     [Header("Sword Attack VFX")]
     [Tooltip("1타 공격 VFX")]
     public VisualEffect attack1VFX;
+    public VisualEffect attack1_groundVFX;
 
     [Tooltip("2타 공격 VFX")]
     public VisualEffect attack2VFX;
+    public VisualEffect attack2_groundVFX;
 
     [Tooltip("FlashSlash VFX")]
     public VisualEffect flashSlashVFX;
@@ -29,6 +31,11 @@ public class SwordEffect : MonoBehaviour, IEffect
                     attack1VFX.SendEvent("OnPlay");
                     Debug.Log("[SwordEffect] 1타 이펙트 재생");
                 }
+
+                if (attack1_groundVFX != null)
+                {
+                    attack1_groundVFX.SendEvent("OnPlay");
+                }
                 break;
 
             case 1:
@@ -36,6 +43,11 @@ public class SwordEffect : MonoBehaviour, IEffect
                 {
                     attack2VFX.SendEvent("OnPlay");
                     Debug.Log("[SwordEffect] 2타 이펙트 재생");
+                }
+
+                if(attack2_groundVFX != null)
+                {
+                    attack2_groundVFX.SendEvent("OnPlay");
                 }
                 break;
 
