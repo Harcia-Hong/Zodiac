@@ -290,7 +290,7 @@ public class PlayerGroundAttack : MonoBehaviour
         anim.SetTrigger(triggerName);
 
         // 전진 이동
-        MoveForward(attackIndex);
+        // MoveForward(attackIndex);
 
         // 히트박스 처리
         StartCoroutine(HitBoxWindow());
@@ -394,7 +394,7 @@ public class PlayerGroundAttack : MonoBehaviour
 
     #region Movement & Rotation
     /// <summary>전진 이동 처리</summary>
-    private void MoveForward(int attackIndex)
+    /*private void MoveForward(int attackIndex)
     {
         if (attackIndex >= forwardDistances.Count)
             return;
@@ -415,7 +415,7 @@ public class PlayerGroundAttack : MonoBehaviour
 
         // DoTween으로 부드러운 이동
         transform.DOMove(targetPos, forwardDuration).SetEase(Ease.OutCubic);
-    }
+    }*/
 
     /// <summary>이동 방향 계산</summary>
     private Vector3 GetMoveDirection()

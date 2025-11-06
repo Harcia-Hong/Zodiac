@@ -501,7 +501,7 @@ VFXRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34699371}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -14316,7 +14316,7 @@ VFXRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750424524}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -21429,6 +21429,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 10019559187081258, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 44027912174399470, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -21499,15 +21503,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1589250458760575222, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 76.28454
+      value: 44.982822
       objectReference: {fileID: 0}
     - target: {fileID: 1589250458760575222, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 63.74596
+      value: -60.49604
       objectReference: {fileID: 0}
     - target: {fileID: 1589250458760575222, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -156.51862
+      value: 60.005997
       objectReference: {fileID: 0}
     - target: {fileID: 1692564152375594664, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_Layer
@@ -21535,15 +21539,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2589468572274339870, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -1.5923193
+      value: 2.5635996
       objectReference: {fileID: 0}
     - target: {fileID: 2589468572274339870, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 5.895546
+      value: 35.602695
       objectReference: {fileID: 0}
     - target: {fileID: 2589468572274339870, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 84.20593
+      value: -96.321846
       objectReference: {fileID: 0}
     - target: {fileID: 2696756325633784118, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21631,15 +21635,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3416992972107984376, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -5.7399755
+      value: 35.636227
       objectReference: {fileID: 0}
     - target: {fileID: 3416992972107984376, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -2.1804943
+      value: 1.9704583
       objectReference: {fileID: 0}
     - target: {fileID: 3416992972107984376, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -84.18
+      value: 97.778694
       objectReference: {fileID: 0}
     - target: {fileID: 3465274098738100813, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_Layer
@@ -21675,11 +21679,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3498243628666563055, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: 'comboCooldowns.Array.data[0]'
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3498243628666563055, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: 'comboCooldowns.Array.data[1]'
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3498243628666563055, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: 'comboCooldowns.Array.data[2]'
@@ -21985,6 +21989,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8326277491501933388, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a27d99741e0039443abf8a9e9f3c977e, type: 2}
     - target: {fileID: 8363095780576254967, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -41583,7 +41591,7 @@ VFXRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018572968}
   m_Enabled: 0
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0

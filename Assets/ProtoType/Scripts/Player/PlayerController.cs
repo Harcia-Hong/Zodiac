@@ -92,20 +92,44 @@ public class PlayerController : MonoBehaviour
         if (isDodging)
             moveVec = dodgeVec;
 
-        if (isSwap || !playerGroundAttack.isFireReady || isSkillCasting)
+        if (isSwap || isSkillCasting)
             moveVec = Vector3.zero;
 
         Vector3 velocity = moveVec * moveSpeed;
         velocity.y = rigid.linearVelocity.y;
         rigid.linearVelocity = velocity;
 
+        /*anim.SetFloat("MoveX", hAxis);
+        anim.SetFloat("MoveY", vAxis);*/
+
         anim.SetBool("isRunning", moveVec != Vector3.zero);
     }
 
     void Turn()
     {
-        if (moveVec != Vector3.zero)
+        bool isAttacking = playerGroundAttack != null && playerGroundAttack.isAttacking;
+
+        if (isAttacking)
+        {
+            // 공격 중: 마우스 방향으로 부드럽게 회전
+            Vector3 lookDirection = GetMouseDirection();
+            lookDirection.y = 0;
+
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                transform.rotation = Quaternion.Lerp(
+                    transform.rotation,
+                    targetRotation,
+                    Time.deltaTime * 15f // 회전 속도 (높을수록 빠름)
+                );
+            }
+        }
+        else if (moveVec != Vector3.zero)
+        {
+            // 평소: 이동 방향으로 즉시 회전
             transform.LookAt(transform.position + moveVec);
+        }
     }
 
     void UpdateMouseWorldPosition()
