@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public bool isSkillCasting = false;
     public bool isSwap;
     public bool isInSwitchMode = false;
+    public bool isPerformingAction = false;
 
     void Awake()
     {
@@ -109,9 +110,9 @@ public class PlayerController : MonoBehaviour
     {
         bool isAttacking = playerGroundAttack != null && playerGroundAttack.isAttacking;
 
-        if (isAttacking)
+        if (isPerformingAction)
         {
-            // 공격 중: 마우스 방향으로 부드럽게 회전
+            // 공격/스킬 중: 마우스 방향으로 부드럽게 회전
             Vector3 lookDirection = GetMouseDirection();
             lookDirection.y = 0;
 
@@ -121,7 +122,7 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Lerp(
                     transform.rotation,
                     targetRotation,
-                    Time.deltaTime * 15f // 회전 속도 (높을수록 빠름)
+                    Time.deltaTime * 15f
                 );
             }
         }
@@ -147,7 +148,7 @@ public class PlayerController : MonoBehaviour
             if (groundPlane.Raycast(ray, out float distance))
                 mouseWorldPos = ray.GetPoint(distance);
         }
-    }
+        }
 
     public void RotateToMouseDirection()
     {
@@ -256,7 +257,15 @@ public class PlayerController : MonoBehaviour
     {
         isInSwitchMode = false;
     }
+    public void OnAttackStart()
+    {
+        isPerformingAction = true;
+    }
 
+    public void OnAttackEnd()
+    {
+        isPerformingAction = false;
+    }
     private void OnDrawGizmos()
     {
         if (Application.isPlaying)
