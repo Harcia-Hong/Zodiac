@@ -1,7 +1,6 @@
-using System.Collections;
+/*using System.Collections;
 using DG.Tweening;
 using UnityEngine;
-using static RewardData;
 
 /// <summary>
 /// 플레이어 돌진 공격 - 쿼터뷰 직선 돌진 전용
@@ -474,3 +473,4 @@ public class PlayerRushAttack : MonoBehaviour
         }
     }
 }
+*/

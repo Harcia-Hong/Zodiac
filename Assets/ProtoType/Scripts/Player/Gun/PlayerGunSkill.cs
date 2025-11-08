@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerGunSkill : MonoBehaviour, IWeaponSkill
+public class PlayerGunSkill : MonoBehaviour
 {
     public void UseQSkill() { Debug.Log("총 Q스킬 (미구현)"); }
     public void UseESkill() { Debug.Log("총 E스킬 (미구현)"); }

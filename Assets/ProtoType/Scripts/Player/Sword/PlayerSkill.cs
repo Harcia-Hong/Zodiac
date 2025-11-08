@@ -1,9 +1,8 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.VFX;
-using static RewardData;
 
 /// <summary>
 /// 플레이어 스킬 시스템 - 쿼터뷰 지상 전용
@@ -628,3 +627,4 @@ public class PlayerSkill : MonoBehaviour
         }
     }
 }
+*/

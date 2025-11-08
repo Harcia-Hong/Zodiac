@@ -475,7 +475,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &34851525
 Transform:
   m_ObjectHideFlags: 0
@@ -537,6 +537,7 @@ MonoBehaviour:
     rushDistance: 0
   totalRewardsApplied: 0
   lastAppliedReward: 
+  appliedRewards: []
 --- !u!1001 &37179602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3091,7 +3092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3969537138097248511, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_CastShadows
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4157429015502840061, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: weapon
@@ -3117,6 +3118,10 @@ PrefabInstance:
       propertyPath: skillSlashEffect
       value: 
       objectReference: {fileID: 1291601743}
+    - target: {fileID: 5856926421106468639, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 6603719290903374638, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1
@@ -3199,7 +3204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8685151602346324287, guid: 934ff79d28a1a5b4dae863ea4918c045, type: 3}
       propertyPath: m_CastShadows
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -36210,7 +36215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1785051788
 Transform:
   m_ObjectHideFlags: 0
@@ -40505,9 +40510,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordStyle
       objectReference: {fileID: 0}
+    - target: {fileID: 1328974854107937630, guid: 541343d0806286d499ce2e17494ea846, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3204648625706946668, guid: 541343d0806286d499ce2e17494ea846, type: 3}
       propertyPath: player
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036518902807048652, guid: 541343d0806286d499ce2e17494ea846, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8072210837525467592, guid: 541343d0806286d499ce2e17494ea846, type: 3}
       propertyPath: m_Pivot.x
@@ -40645,7 +40658,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 041b5971bef4d724b8ed9c9e322c28e6, type: 2}
   swordStyleManager: {fileID: 0}
   playerController: {fileID: 0}
+  isActive: 0
   tKeyCoolDown: 5
+  tKeyTimer: 0
+  canToggle: 1
 --- !u!1001 &2009125108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43589,6 +43605,10 @@ PrefabInstance:
     - target: {fileID: 4179280445386010382, guid: 99d15143d54b54444980b3d445ab6c01, type: 3}
       propertyPath: m_Name
       value: RewardUIManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179280445386010382, guid: 99d15143d54b54444980b3d445ab6c01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5636683566015148986, guid: 99d15143d54b54444980b3d445ab6c01, type: 3}
       propertyPath: m_LocalPosition.x

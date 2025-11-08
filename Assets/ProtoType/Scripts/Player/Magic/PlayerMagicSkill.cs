@@ -1,11 +1,11 @@
-using System.Collections;
+/*using System.Collections;
 using UnityEngine;
 
 /// <summary>
 /// 마법 스킬 시스템 (임시 스텁 - Week 2에서 본격 구현 예정)
 /// IWeaponSkill 인터페이스 구현으로 WeaponManager와 연동
 /// </summary>
-public class PlayerMagicSkill : MonoBehaviour, IWeaponSkill
+public class PlayerMagicSkill : MonoBehaviour
 {
     [Header("Magic System (임시)")]
     public int maxMana = 100;
@@ -54,16 +54,12 @@ public class PlayerMagicSkill : MonoBehaviour, IWeaponSkill
     // 컴포넌트 참조
     private PlayerController playerController;
     private Animator anim;
-    private MagicAbility magicIndicator;
-    private PlayerMana playerMana;
 
     /// <summary>초기화</summary>
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
         anim = GetComponentInChildren<Animator>();
-        magicIndicator = GetComponent<MagicAbility>();
-        playerMana = GetComponent<PlayerMana>();
     }
 
     /// <summary>업데이트</summary>
@@ -71,17 +67,7 @@ public class PlayerMagicSkill : MonoBehaviour, IWeaponSkill
     {
         if (enabled) // 활성화된 경우에만
         {
-            HandleManaRegeneration();
             HandleCooldowns();
-        }
-    }
-
-    /// <summary>마나 재생 처리</summary>
-    private void HandleManaRegeneration()
-    {
-        if (currentMana < maxMana)
-        {
-            currentMana = Mathf.Min(maxMana, currentMana + Mathf.RoundToInt(manaRegenRate * Time.deltaTime));
         }
     }
 
@@ -492,3 +478,4 @@ public class PlayerMagicSkill : MonoBehaviour, IWeaponSkill
         Debug.Log($"현재 캐스팅 중: {IsCasting()}");
     }
 }
+*/

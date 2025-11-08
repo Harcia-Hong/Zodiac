@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 임시 활 스킬 스텁
 /// </summary>
-public class PlayerBowSkill : MonoBehaviour, IWeaponSkill
+public class PlayerBowSkill : MonoBehaviour
 {
     public void UseQSkill() { Debug.Log("활 Q스킬 (미구현)"); }
     public void UseESkill() { Debug.Log("활 E스킬 (미구현)"); }

@@ -32,9 +32,6 @@ public class StageObjective : MonoBehaviour
     [Tooltip("실패 시 스테이지 실패 여부 판단")]
     public bool isFailCondition = false;
 
-    [Tooltip("목표 달성 시 성공 보상")]
-    public RewardData bonusReward;
-
     [Header("진행 사항 (런타임 전용)")]
     [SerializeField, Tooltip("현재 진행도")]
     private int currentCount = 0;

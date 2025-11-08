@@ -9,7 +9,7 @@ using UnityEngine.VFX;
 /// Q스킬: 검기 발사, E스킬: 범위 공격
 /// IWeaponSkill 인터페이스 구현
 /// </summary>
-public class PlayerSwordSkill : MonoBehaviour, IWeaponSkill
+public class PlayerSwordSkill : MonoBehaviour
 {
     [Header("Q Skill - Sword Slash")]
     public float qSkillCooldown = 5f;
@@ -41,7 +41,6 @@ public class PlayerSwordSkill : MonoBehaviour, IWeaponSkill
     private PlayerController playerController;
     private PlayerLockOn playerLockOn;
     private Animator anim;
-    private PlayerMana playerMana;
 
     // 스킬 상태 관리
     private bool isQSkillReady = true;
@@ -60,7 +59,6 @@ public class PlayerSwordSkill : MonoBehaviour, IWeaponSkill
     private void Awake()
     {
         InitializeComponents();
-        playerMana = GetComponent<PlayerMana>();
     }
 
     /// <summary>컴포넌트 참조 설정</summary>

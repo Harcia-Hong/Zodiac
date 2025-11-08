@@ -9,7 +9,7 @@ public class PlayerAttackManager : MonoBehaviour
     [Header("Attack System References")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private PlayerGroundAttack groundAttack;        // 지상 공격 시스템
-    [SerializeField] private PlayerRushAttack rushAttack;            // 돌진 공격 시스템
+    //[SerializeField] private PlayerRushAttack rushAttack;            // 돌진 공격 시스템
     [SerializeField] private PlayerFlashSlash spinAttack;            // 스핀 어택 시스템
     [SerializeField] private PlayerLockOn lockOnSystem;              // 락온 시스템
 
@@ -34,8 +34,8 @@ public class PlayerAttackManager : MonoBehaviour
         if (groundAttack == null)
             groundAttack = GetComponent<PlayerGroundAttack>();
 
-        if (rushAttack == null)
-            rushAttack = GetComponent<PlayerRushAttack>();
+        /*if (rushAttack == null)
+            rushAttack = GetComponent<PlayerRushAttack>();*/
 
         if (spinAttack == null)
             spinAttack = GetComponent<PlayerFlashSlash>();
@@ -79,8 +79,8 @@ public class PlayerAttackManager : MonoBehaviour
         if (groundAttack != null && groundAttack.isGroundAttacking)
             return true;
 
-        if (rushAttack != null && rushAttack.IsRushing())
-            return true;
+        /*if (rushAttack != null && rushAttack.IsRushing())
+            return true;*/
 
        // if (spinAttack != null && spinAttack.isSpinAttack())
        //     return true;
@@ -93,7 +93,7 @@ public class PlayerAttackManager : MonoBehaviour
     {
         Transform lockedTarget = GetCurrentLockedTarget();
 
-        if (lockedTarget != null && IsValidRushTarget(lockedTarget))
+        /*if (lockedTarget != null && IsValidRushTarget(lockedTarget))
         {
             // 락온된 적이 있고 돌진 가능한 거리면 돌진 공격
             ExecuteRushAttack(lockedTarget);
@@ -102,7 +102,9 @@ public class PlayerAttackManager : MonoBehaviour
         {
             // 기본 지상 공격
             ExecuteGroundAttack();
-        }
+        }*/
+
+        ExecuteGroundAttack();
     }
 
     /// <summary>현재 락온된 타겟 반환</summary>
@@ -136,7 +138,7 @@ public class PlayerAttackManager : MonoBehaviour
     }
 
     /// <summary>돌진 공격 실행</summary>
-    private void ExecuteRushAttack(Transform target)
+    /*private void ExecuteRushAttack(Transform target)
     {
         if (rushAttack != null && target != null)
         {
@@ -144,7 +146,7 @@ public class PlayerAttackManager : MonoBehaviour
             currentAttackType = AttackType.Rush;
             Debug.Log($"돌진 공격 실행: {target.name}");
         }
-    }
+    }*/
 
     /// <summary>현재 공격 타입 업데이트</summary>
     private void UpdateCurrentAttackType()
@@ -163,7 +165,7 @@ public class PlayerAttackManager : MonoBehaviour
     public void CancelAllAttacks()
     {
         groundAttack?.CancelGroundAttack();
-        rushAttack?.CancelRushAttack();
+        //rushAttack?.CancelRushAttack();
         currentAttackType = AttackType.None;
     }
 
