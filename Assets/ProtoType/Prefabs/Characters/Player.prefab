@@ -1145,22 +1145,14 @@ GameObject:
   - component: {fileID: 5727028254470415559}
   - component: {fileID: 7799197343071727324}
   - component: {fileID: 4791227975155923809}
-  - component: {fileID: 6314770098893625044}
   - component: {fileID: 784444440446768129}
   - component: {fileID: 4157429015502840061}
   - component: {fileID: 166001639594635720}
   - component: {fileID: 3498243628666563055}
-  - component: {fileID: 6115006883225698558}
-  - component: {fileID: -6390450585498693793}
   - component: {fileID: 4824637442570820053}
-  - component: {fileID: 5054471131947945810}
-  - component: {fileID: -3953776486232254355}
-  - component: {fileID: 3672090403501496929}
-  - component: {fileID: 6040999326719314590}
   - component: {fileID: 7309786119556762424}
-  - component: {fileID: 5507241714233571904}
-  - component: {fileID: 1208648323315265668}
-  - component: {fileID: -4169243723402514204}
+  - component: {fileID: 8364125013709960799}
+  - component: {fileID: 3249825991128191547}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1186,6 +1178,7 @@ Transform:
   - {fileID: 4928606113377238567}
   - {fileID: 6903548872651791204}
   - {fileID: 9129869334093190617}
+  - {fileID: 6603719290903374638}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8326277491501933388
@@ -1198,7 +1191,7 @@ Animator:
   m_GameObject: {fileID: 3325658991383552908}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d3ffbb53d382790469e6c8f926efe5f6, type: 3}
-  m_Controller: {fileID: 9100000, guid: c03f3226dcad9814d8495e5679b7bd35, type: 2}
+  m_Controller: {fileID: 9100000, guid: a27d99741e0039443abf8a9e9f3c977e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1302,6 +1295,7 @@ MonoBehaviour:
   isSkillCasting: 0
   isSwap: 0
   isInSwitchMode: 0
+  isPerformingAction: 0
 --- !u!114 &4791227975155923809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,7 +1303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3325658991383552908}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99a312e20af96e7479a37252acc8ec1d, type: 3}
   m_Name: 
@@ -1318,46 +1312,6 @@ MonoBehaviour:
   curHealth: 100
   hpSlider: {fileID: 0}
   isDead: 0
---- !u!114 &6314770098893625044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325658991383552908}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ccec77c6b0a4994bad81760c4112778, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillCoolDown: 5
-  isSkillReady: 1
-  eSkillCoolDown: 5
-  isESkillReady: 1
-  eSkillRadius: 4
-  eSkillDamage: 40
-  eSkillCastTime: 1.5
-  eSkillEffect: {fileID: 0}
-  skillRadius: 5
-  skillAngle: 60
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  slashVFXGraph: {fileID: 0}
-  vfxSpawnPoint: {fileID: 4928606113377238567}
-  slashProjectileRange: 10
-  slashSpeed: 20
-  slashProjectileDamage: 20
-  projectileEnemyLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  slashProjectileRadius: 0.6
-  skillSlashEffect: {fileID: 0}
-  anim: {fileID: 8326277491501933388}
-  skillOrigin: {fileID: 2696756325633784118}
-  skillDamage: 30
-  abilityIndicator: {fileID: 6115006883225698558}
-  skill1IndicatorDuration: 0.2
 --- !u!114 &784444440446768129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1440,21 +1394,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19981558bc229648ab4faca7cd13054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboTriggers:
-  - Attack1
-  - Attack2
-  - Attack3
-  - Attack4
-  comboCooldowns:
-  - 0.5
-  - 0.5
-  - 0.45
-  - 0.4
-  forwardDistances:
-  - 1
-  - 1
-  - 1
-  - 1
+  attackTrigger: Attack1
+  attackDuration: 0.4
+  forwardDistance: 0.3
   forwardDuration: 0.2
   enemyLayer:
     serializedVersion: 2
@@ -1463,88 +1405,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   allowRightClickCancel: 1
---- !u!114 &6115006883225698558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325658991383552908}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e667abc3ffa3344a8b8889ac8020277, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilityImage1: {fileID: 0}
-  abilityText1: {fileID: 0}
-  ability1Key: 113
-  ability1Cooldown: 5
-  ability1Canvas: {fileID: 749865989443447606}
-  ability1SkillShot: {fileID: 4101903080512091101}
-  abilityImage2: {fileID: 0}
-  abilityText2: {fileID: 0}
-  ability2Key: 101
-  ability2Cooldown: 7
-  ability2Canvas: {fileID: 8098398954166435742}
-  ability2RangeIndicator: {fileID: 5290532752517226701}
-  maxAbility2Distance: 7
-  abilityImage3: {fileID: 0}
-  abilityText3: {fileID: 0}
-  ability3Key: 114
-  ability3Cooldown: 10
-  ability3Canvas: {fileID: 1200389377140377411}
-  ability3Cone: {fileID: 1394970537939385333}
---- !u!114 &-6390450585498693793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325658991383552908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01e8005a5e8573f45857924d390b5004, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentWeaponType: 0
-  swordSkill: {fileID: 4824637442570820053}
-  magicSkill: {fileID: 5054471131947945810}
-  gunSkill: {fileID: -3953776486232254355}
-  bowSkill: {fileID: 3672090403501496929}
-  swordObject: {fileID: 1513031832565836019}
-  staffObject: {fileID: 100000}
-  gunObject: {fileID: 0}
-  bowObject: {fileID: 0}
-  availableWeapons:
-  - weaponName: Iron Sword
-    weaponType: 0
-    weaponIcon: {fileID: 21300000, guid: d8108e50be9cf7f49878337929803edd, type: 3}
-    skillIcons:
-    - {fileID: 21300000, guid: 120aff55dd333204abb8b02f737ffb00, type: 3}
-    - {fileID: 21300000, guid: 58152390eb10b6747a605add58149cd7, type: 3}
-    animatorController: {fileID: 9100000, guid: a27d99741e0039443abf8a9e9f3c977e, type: 2}
-    baseDamage: 25
-    baseSpeed: 1.2
-    baseRange: 2.5
-    isUnlocked: 1
-    switchDelay: 0
-  - weaponName: Magic Staff
-    weaponType: 1
-    weaponIcon: {fileID: 21300000, guid: 4029a9cfeb86f134c9c5af05993eaac8, type: 3}
-    skillIcons:
-    - {fileID: 21300000, guid: 4029a9cfeb86f134c9c5af05993eaac8, type: 3}
-    - {fileID: 21300000, guid: cdec13907ffc75749ab2ed436bec6b14, type: 3}
-    animatorController: {fileID: 9100000, guid: 8eca433ffb7ed9445b006e94a16890d4, type: 2}
-    baseDamage: 25
-    baseSpeed: 1.2
-    baseRange: 2.5
-    isUnlocked: 1
-    switchDelay: 0
-  weaponSwitchDelay: 0.3
-  allowSwitchDuringCombat: 1
-  weaponSwitchVFX: {fileID: 0}
-  weaponSwitchSound: {fileID: 0}
-  handTransform: {fileID: 0}
 --- !u!114 &4824637442570820053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1568,8 +1428,6 @@ MonoBehaviour:
   eSkillRadius: 4
   eSkillDamage: 40
   eSkillCastTime: 1.5
-  qManaCost: 20
-  eManaCost: 35
   slashVFXGraph: {fileID: 0}
   vfxSpawnPoint: {fileID: 4928606113377238567}
   eSkillEffect: {fileID: 0}
@@ -1577,82 +1435,6 @@ MonoBehaviour:
   skillOrigin: {fileID: 0}
   qSkillAnimTrigger: Skill_Q
   eSkillAnimTrigger: Skill_E
---- !u!114 &5054471131947945810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325658991383552908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27f0aaa863b95244181ab5d350aed5c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxMana: 100
-  currentMana: 100
-  manaRegenRate: 10
-  qSkillManaCost: 25
-  qSkillCooldown: 3
-  qSkillCastTime: 1
-  qSkillDamage: 35
-  eSkillManaCost: 40
-  eSkillCooldown: 6
-  eSkillCastTime: 1.5
-  eSkillDamage: 50
-  qSkillTrigger: Magic_Q_Cast
-  eSkillTrigger: Magic_E_Cast
-  Idle: Magic_Idle
-  castingVFXPrefab: {fileID: 0}
-  QVFXPrefab: {fileID: 0}
-  EVFXPrefab: {fileID: 0}
-  castingSound: {fileID: 0}
-  spellSound: {fileID: 0}
---- !u!114 &-3953776486232254355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325658991383552908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7deaa7b054361414b8cc570505943f8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3672090403501496929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325658991383552908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82ef26ba90ee4744b9cf9f3b2493fc1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6040999326719314590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325658991383552908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9d5c42e8f98a874f9ac32820f6606e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  qSkillCanvas: {fileID: 8098398954166435742}
-  qSkillTargetIndicator: {fileID: 5290532752517226701}
-  qSkillMaxRange: 12
-  eSkillCanvas: {fileID: 8098398954166435742}
-  eSkillAreaIndicator: {fileID: 5290532752517226701}
-  eSkillRadius: 5
-  eSkillMaxRange: 10
-  fireballColor: {r: 1, g: 0, b: 0, a: 1}
-  iceSpikeColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!114 &7309786119556762424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1670,22 +1452,7 @@ MonoBehaviour:
   eSkillCanvas: {fileID: 1200389377140377411}
   eSkillRangeIndicator: {fileID: 5290532752517226701}
   maxESkillDistance: 7
---- !u!114 &5507241714233571904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325658991383552908}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 675d4b52063c9f34aaa452bf6d34ee41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxMana: 100
-  curMana: 100
-  mpSlider: {fileID: 0}
---- !u!114 &1208648323315265668
+--- !u!114 &8364125013709960799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1694,15 +1461,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 3325658991383552908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acbfe6246bf729344b14de0e3c12f6f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 769e3549c1c4ec140aefd98d555ae980, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerTimeConsumer
-  timePerMeter: 0.5
-  attackTimeCost: 2
-  dodgeTimeCost: 3
-  skillTimeCost: 5
-  distanceThreshold: 1
---- !u!114 &-4169243723402514204
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombatStateMachine
+  anim: {fileID: 0}
+  playerController: {fileID: 0}
+  groundAttack: {fileID: 0}
+  flashSlash: {fileID: 0}
+  attackDuration: 0.3
+  flashSlashDuration: 0.7
+  dashAttackDuration: 0.4
+  allowAttackCancel: 1
+  allowFlashSlashCancel: 1
+  minCancelTime: 0.1
+--- !u!114 &3249825991128191547
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1711,15 +1483,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3325658991383552908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36e3bea5bd140db49b19e88fd9c212a1, type: 3}
+  m_Script: {fileID: 11500000, guid: c1daa951f904f8a42abce716fc673c06, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TimeResource
-  maxTime: 120
-  currentTime: 120
-  graceTime: 5
-  isInGracePeriod: 0
-  graceTimeRemaining: 0
-  criticalThreshold: 0.1
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventHandler
+  effectGenerator: {fileID: 0}
 --- !u!1 &3345729393395604293
 GameObject:
   m_ObjectHideFlags: 0
@@ -3749,3 +3516,69 @@ Transform:
   - {fileID: 4403437209551687548}
   m_Father: {fileID: 8685447978455407856}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1280339302589621036
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2696756325633784118}
+    m_Modifications:
+    - target: {fileID: 5193380698761719071, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_Name
+      value: EffectGeneator
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4932
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5518219724396223788, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+--- !u!4 &6603719290903374638 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5359761272502208514, guid: 68e8e601879e0464d9fc55f16f98e73c, type: 3}
+  m_PrefabInstance: {fileID: 1280339302589621036}
+  m_PrefabAsset: {fileID: 0}

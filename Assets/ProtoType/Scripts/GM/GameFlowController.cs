@@ -46,13 +46,6 @@ public class GameFlowController : MonoBehaviour
         {
             TogglePause();
         }
-
-        // 강제 보상 UI 테스트
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (stageManager != null)
-                stageManager.TestShowRewardUI();
-        }
     }
 
     /// <summary>

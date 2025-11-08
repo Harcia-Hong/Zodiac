@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     PlayerGroundAttack playerGroundAttack;
     PlayerLockOn playerLockOn;
     Camera mainCamera; // 성능 최적화를 위한 캐싱 
+    PlayerCombatStateMachine combatStateMachine;
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -33,7 +34,6 @@ public class PlayerController : MonoBehaviour
     public bool isSkillCasting = false;
     public bool isSwap;
     public bool isInSwitchMode = false;
-    public bool isPerformingAction = false;
 
     void Awake()
     {
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
         playerGroundAttack = GetComponent<PlayerGroundAttack>();
         playerLockOn = GetComponent<PlayerLockOn>();
         mainCamera = Camera.main; // 캐싱으로 성능 개선
+        combatStateMachine = GetComponent<PlayerCombatStateMachine>();
     }
 
     private void Update()
@@ -108,9 +109,7 @@ public class PlayerController : MonoBehaviour
 
     void Turn()
     {
-        bool isAttacking = playerGroundAttack != null && playerGroundAttack.isAttacking;
-
-        if (isPerformingAction)
+        if (combatStateMachine != null && combatStateMachine.IsInAction())
         {
             // 공격/스킬 중: 마우스 방향으로 부드럽게 회전
             Vector3 lookDirection = GetMouseDirection();
@@ -256,15 +255,6 @@ public class PlayerController : MonoBehaviour
     public void ExitSwitchMode()
     {
         isInSwitchMode = false;
-    }
-    public void OnAttackStart()
-    {
-        isPerformingAction = true;
-    }
-
-    public void OnAttackEnd()
-    {
-        isPerformingAction = false;
     }
     private void OnDrawGizmos()
     {

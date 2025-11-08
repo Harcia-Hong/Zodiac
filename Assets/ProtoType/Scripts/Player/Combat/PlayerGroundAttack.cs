@@ -11,24 +11,15 @@ using UnityEngine;
 public class PlayerGroundAttack : MonoBehaviour
 {
     #region Serialized Fields
-    [Header("Combo Settings - 빠른 3단 콤보")]
-    [SerializeField, Tooltip("콤보 애니메이션 트리거 이름들")]
-    private List<string> comboTriggers = new List<string>
-    {
-        "Attack1", "Attack2", "Attack3"  // 3단 콤보
-    };
+    [Header("Attack Settings - 기본 공격")]
+    [SerializeField, Tooltip("공격 애니메이션 트리거 이름")]
+    private string attackTrigger = "Attack1";
 
-    [SerializeField, Tooltip("각 공격 간 쿨다운 (초)")]
-    private List<float> comboCooldowns = new List<float>
-    {
-        0.2f, 0.2f, 0.25f  // 빠른 공격 속도
-    };
+    [SerializeField, Tooltip("공격 전체 지속 시간 (초)")]
+    private float attackDuration = 0.4f; // 1타 애니메이션 총 길이
 
-    [SerializeField, Tooltip("각 공격 시 전진 거리")]
-    private List<float> forwardDistances = new List<float>
-    {
-        0.3f, 0.3f, 0.4f  // 거의 제자리 공격
-    };
+    [SerializeField, Tooltip("공격 시 전진 거리")]
+    private float forwardDistance = 0.3f;
 
     [SerializeField, Tooltip("전진 이동 속도")]
     private float forwardDuration = 0.15f;  // 전진 속도도 빠르게
@@ -42,7 +33,7 @@ public class PlayerGroundAttack : MonoBehaviour
 
     [Header("Cancel System")]
     [SerializeField, Tooltip("우클릭 캔슬 허용")]
-    private bool allowRightClickCancel = true;
+    private bool allowRightClickCancel = true;  
     #endregion
 
     #region Component References
@@ -57,18 +48,8 @@ public class PlayerGroundAttack : MonoBehaviour
 
     #region Combo State Variables
     // 콤보 상태 관리
-    private int comboIndex = 0;
-    private float comboStartTime = 0f;
     private Coroutine comboCoroutine;
     private HashSet<GameObject> hitEnemies = new HashSet<GameObject>();
-
-    // 캔슬 상태
-    private bool isCancelled = false;
-
-    // 홀드/클릭 시스템
-    private bool isHoldingAttack = false;  // 마우스를 누르고 있는지
-    private bool waitingForNextClick = false;  // 다음 클릭 대기 중
-    private float comboWindowTime = 0.5f;  // 콤보 입력 유효 시간
     #endregion
 
     #region Movement Variables
@@ -103,7 +84,6 @@ public class PlayerGroundAttack : MonoBehaviour
         // 공격 중 홀드/캔슬 입력 체크
         if (isGroundAttacking)
         {
-            CheckHoldInput();
             CheckCancelInput();
         }
 
@@ -138,13 +118,6 @@ public class PlayerGroundAttack : MonoBehaviour
     /// <summary>외부에서 호출: 지상 공격 시작 (클릭 또는 홀드)</summary>
     public void StartGroundCombo()
     {
-        // 이미 공격 중이면 콤보 진행 시도
-        if (isGroundAttacking)
-        {
-            TryNextCombo();
-            return;
-        }
-
         if (!CanGroundAttack())
         {
             Debug.Log("[PlayerGroundAttack] 공격 불가능 상태");
@@ -153,11 +126,7 @@ public class PlayerGroundAttack : MonoBehaviour
 
         // 상태 초기화
         isGroundAttacking = true;
-        isGroundAttackReady = false;
-        isCancelled = false;
-        isHoldingAttack = true;  // 처음 클릭 시 홀드 시작
-        comboIndex = 0;
-        comboStartTime = Time.time;
+        isGroundAttackReady = false;    
         hitEnemies.Clear();
 
         // 준비 작업
@@ -166,19 +135,6 @@ public class PlayerGroundAttack : MonoBehaviour
 
         // 첫 공격 실행 + 홀드/클릭 대기
         comboCoroutine = StartCoroutine(ComboRoutine());
-
-        Debug.Log("[PlayerGroundAttack] 공격 시작!");
-    }
-
-    /// <summary>다음 콤보 시도 (이미 공격 중일 때 클릭)</summary>
-    private void TryNextCombo()
-    {
-        if (waitingForNextClick && comboIndex < comboTriggers.Count - 1)
-        {
-            waitingForNextClick = false;
-            isHoldingAttack = true;  // 다시 홀드 상태로
-            Debug.Log($"[PlayerGroundAttack] 다음 콤보 입력! ({comboIndex + 1} → {comboIndex + 2})");
-        }
     }
 
     /// <summary>지상 공격 가능 여부 확인</summary>
@@ -197,11 +153,7 @@ public class PlayerGroundAttack : MonoBehaviour
     public void CancelGroundAttack()
     {
         if (!isGroundAttacking) return;
-
-        isCancelled = true;
         EndGroundCombo();
-
-        Debug.Log("[PlayerGroundAttack] 공격 캔슬됨");
     }
     #endregion
 
@@ -209,112 +161,31 @@ public class PlayerGroundAttack : MonoBehaviour
     /// <summary>콤보 루틴 - 클릭/홀드 하이브리드</summary>
     private IEnumerator ComboRoutine()
     {
-        while (comboIndex < comboTriggers.Count && isGroundAttacking)
-        {
-            // 캔슬되었으면 중단
-            if (isCancelled)
-            {
-                Debug.Log($"[PlayerGroundAttack] {comboIndex + 1}단 공격 전 캔슬됨");
-                break;
-            }
+        // 1. 공격 실행
+        ExecuteAttack();
 
-            // 현재 공격 실행
-            ExecuteAttack(comboIndex);
+        // 2. 공격 지속 시간(애니메이션 길이)만큼 대기
+        yield return new WaitForSeconds(attackDuration);
 
-            // 공격 애니메이션 시간 대기
-            float cooldown = comboIndex < comboCooldowns.Count ? comboCooldowns[comboIndex] : 0.2f;
-            yield return new WaitForSeconds(cooldown);
-
-            // 마지막 공격이면 종료
-            if (comboIndex >= comboTriggers.Count - 1)
-            {
-                Debug.Log("[PlayerGroundAttack] 마지막 공격 완료");
-                break;
-            }
-
-            // 다음 공격 조건 체크
-            if (isHoldingAttack)
-            {
-                // 홀드 중이면 자동으로 다음 공격
-                Debug.Log("[PlayerGroundAttack] 홀드 중 - 다음 공격 자동 실행");
-                comboIndex++;
-            }
-            else
-            {
-                // 홀드 안 하면 다음 클릭 대기
-                Debug.Log("[PlayerGroundAttack] 다음 클릭 대기 중...");
-                waitingForNextClick = true;
-
-                float waitTime = 0f;
-                while (waitTime < comboWindowTime && waitingForNextClick)
-                {
-                    waitTime += Time.deltaTime;
-                    yield return null;
-
-                    // 대기 중 홀드하면 계속 진행
-                    if (isHoldingAttack)
-                    {
-                        waitingForNextClick = false;
-                        comboIndex++;
-                        break;
-                    }
-                }
-
-                // 시간 초과 시 콤보 종료
-                if (waitingForNextClick)
-                {
-                    Debug.Log("[PlayerGroundAttack] 콤보 입력 시간 초과");
-                    break;
-                }
-            }
-        }
-
-        // 콤보 종료
+        // 3. 콤보 종료
         EndGroundCombo();
     }
 
     /// <summary>특정 인덱스의 공격 실행</summary>
-    private void ExecuteAttack(int attackIndex)
+    private void ExecuteAttack()
     {
-        if (attackIndex >= comboTriggers.Count)
-        {
-            Debug.LogWarning($"[PlayerGroundAttack] 잘못된 공격 인덱스: {attackIndex}");
-            return;
-        }
-
         // 타겟 방향 회전
         RotateToTarget();
 
         // 애니메이션 트리거
-        string triggerName = comboTriggers[attackIndex];
-        anim.SetTrigger(triggerName);
-
-        // 전진 이동
-        // MoveForward(attackIndex);
+        anim.SetTrigger(attackTrigger);
 
         // 히트박스 처리
         StartCoroutine(HitBoxWindow());
-
-        Debug.Log($"[PlayerGroundAttack] {attackIndex + 1}단 공격 실행: {triggerName}");
     }
     #endregion
 
     #region Input Handling
-    /// <summary>홀드 입력 체크</summary>
-    private void CheckHoldInput()
-    {
-        // 마우스 왼쪽 버튼 상태 확인
-        if (Input.GetMouseButton(0))
-        {
-            isHoldingAttack = true;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            isHoldingAttack = false;
-            Debug.Log("[PlayerGroundAttack] 홀드 해제");
-        }
-    }
-
     /// <summary>캔슬 입력 체크 (우클릭)</summary>
     private void CheckCancelInput()
     {
@@ -370,12 +241,6 @@ public class PlayerGroundAttack : MonoBehaviour
             {
                 // 데미지 계산 (마지막 공격은 2배)
                 int damage = weapon.GetDamage();
-                if (comboIndex == comboTriggers.Count - 1)
-                {
-                    damage *= 2;
-                    Debug.Log("[PlayerGroundAttack] 마지막 공격! 데미지 2배!");
-                }
-
                 // 데미지 적용
                 enemy.ApplySkillDamage(damage);
                 hitEnemies.Add(enemyObj);
@@ -498,11 +363,7 @@ public class PlayerGroundAttack : MonoBehaviour
 
         // 상태 초기화
         isGroundAttacking = false;
-        comboIndex = 0;
         hitEnemies.Clear();
-        isCancelled = false;
-        isHoldingAttack = false;  // 홀드 상태 초기화
-        waitingForNextClick = false;  // 대기 상태 초기화
 
         // CombatStateMachine에 알림
         if (combatStateMachine != null)
@@ -532,11 +393,7 @@ public class PlayerGroundAttack : MonoBehaviour
         if (anim == null)
             return;
 
-        foreach (string trigger in comboTriggers)
-        {
-            anim.ResetTrigger(trigger);
-        }
-
+        anim.ResetTrigger(attackTrigger);
         anim.ResetTrigger("Dodge");
         anim.ResetTrigger("Skill_Q");
         anim.ResetTrigger("Skill_E");
@@ -557,11 +414,6 @@ public class PlayerGroundAttack : MonoBehaviour
 
         // 전진 방향 표시
         Gizmos.color = Color.blue;
-        if (comboIndex < forwardDistances.Count)
-        {
-            float distance = forwardDistances[comboIndex];
-            Gizmos.DrawLine(transform.position, transform.position + transform.forward * distance);
-        }
     }
     #endregion
 }

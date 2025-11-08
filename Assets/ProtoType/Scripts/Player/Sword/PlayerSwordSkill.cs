@@ -2,7 +2,6 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.VFX;
-using static RewardData;
 
 /// <summary>
 /// 검 전용 스킬 시스템
@@ -24,10 +23,6 @@ public class PlayerSwordSkill : MonoBehaviour, IWeaponSkill
     public float eSkillRadius = 4f;
     public int eSkillDamage = 40;
     public float eSkillCastTime = 1.5f;
-
-    [Header("Mana Cost")]
-    public int qManaCost = 20;
-    public int eManaCost = 35;
 
     [Header("VFX & Effects")]
     public VisualEffect slashVFXGraph;
@@ -124,14 +119,8 @@ public class PlayerSwordSkill : MonoBehaviour, IWeaponSkill
         }
     }
 
-    /// <summary>스탯에 따른 쿨다운 조정</summary>
     private float GetAdjustedCooldown(float baseCooldown)
     {
-        if (PlayerStatsManager.Instance != null)
-        {
-            float reduction = PlayerStatsManager.Instance.GetCurrentStatValue(StatType.SkillCooldown);
-            return baseCooldown * (1f - (reduction / 100f));
-        }
         return baseCooldown;
     }
 
@@ -222,13 +211,6 @@ public class PlayerSwordSkill : MonoBehaviour, IWeaponSkill
             return false;
         }
 
-        // 마나 체크 (0으로 체크만 - 실제 소모는 CastSwordSlash에서)
-        if (playerMana != null && playerMana.curMana < qManaCost)
-        {
-            Debug.Log("[PlayerSwordSkill] 마나 부족으로 Q스킬 사용 불가");
-            return false;
-        }
-
         return true;
     }
 
@@ -236,13 +218,6 @@ public class PlayerSwordSkill : MonoBehaviour, IWeaponSkill
     public void CastSwordSlash()
     {
         if (!CanUseQSkill()) return;
-
-        // 마나 소모 시작
-        if (playerMana != null)
-        {
-            if (!playerMana.TryConsumeMana(qManaCost))
-                return;
-        }
 
         Debug.Log("[PlayerSwordSkill] Q스킬: 검기 발사");
 

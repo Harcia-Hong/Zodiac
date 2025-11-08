@@ -7,10 +7,6 @@ public class StageManager : MonoBehaviour
     [SerializeField] private StageData currentStageData;
     [SerializeField] private MonsterSpanwer monsterSpanwer;
 
-    [Header("보상 시스템 연동")]
-    [SerializeField, Tooltip("보상 UI 관리자")]
-    private RewardUIManager rewardUIManager;
-
     [Header("현재 상태 (디버깅용)")]
     [SerializeField] private int currentKillCount = 0;
     [SerializeField] private int currentWaveIndex = -1;
@@ -30,11 +26,6 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        if(rewardUIManager == null) // 자동 참조 설정
-        {
-            rewardUIManager = FindFirstObjectByType<RewardUIManager>();
-        }
-
         StartStage();
     }
 
@@ -144,35 +135,6 @@ public class StageManager : MonoBehaviour
         monsterSpanwer.ClearAllEnemies();
 
         Debug.Log("[StageManager] 남은 몬스터 정리 완료");
-
-        // 보상 선택 UI 표시
-        ShowRewardSelection();
-    }
-
-    void ShowRewardSelection()
-    {
-        if(rewardUIManager == null)
-        {
-            Debug.LogError("[StageManager] RewardUIManager를 찾을 수 없스우");
-            // 보상 없이 다음 스테이지 직행
-            StartCoroutine(NextStage());
-            return;
-        }
-
-        currentStageState = StageState.ShowingRewards;
-
-        Debug.Log("[StageManager] 보상 선택 화면 표시");
-
-        // 보상 UI 표시 ( 선택 후 콜백 실행 )
-        rewardUIManager.ShowRewardSelection(RewardSelected);
-    }
-
-    void RewardSelected() // 보상 선택 완료 콜백
-    {
-        Debug.Log("[StageManager] 보상 선택 완료");
-
-        // 다음 스테이지 ㄱㄱ
-        StartCoroutine(NextStage());
     }
 
     IEnumerator NextStage() // 다음 스테이지 시작 ( 현재는 1-1만 있기에 재시작으로 구현 )
@@ -204,22 +166,6 @@ public class StageManager : MonoBehaviour
     public int GetTotalWaveCount() => currentStageData?.waves.Length ?? 0;
 
     /// <summary>
-    /// 강제 보상 UI 테스트 (개발용)
-    /// </summary>
-    [ContextMenu("테스트: 보상 UI 표시")]
-    public void TestShowRewardUI()
-    {
-        if (currentStageState == StageState.ShowingRewards)
-        {
-            Debug.LogWarning("[StageManager] 이미 보상 UI가 표시 중입니다!");
-            return;
-        }
-
-        Debug.Log("[StageManager] 테스트: 강제 보상 UI 표시");
-        ShowRewardSelection();
-    }
-
-    /// <summary>
     /// 현재 진행 상황 로그 출력 (디버깅용)
     /// </summary>
     [ContextMenu("현재 상황 확인")]
@@ -230,11 +176,6 @@ public class StageManager : MonoBehaviour
         Debug.Log($"상태: {currentStageState}");
         Debug.Log($"웨이브: {currentWaveIndex + 1}/{GetTotalWaveCount()}");
         Debug.Log($"처치 수: {currentKillCount}/{GetTargetKillCount()}");
-
-        if (rewardUIManager != null)
-            Debug.Log($"보상 UI 활성화: {rewardUIManager.IsUIActive}");
-        else
-            Debug.Log("보상 UI 관리자: 없음");
     }
 }
 
