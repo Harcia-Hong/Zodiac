@@ -259,9 +259,6 @@ MonoBehaviour:
   damage: 25
   attackRate: 0.4
   hitBox: {fileID: 4077951710772305050}
-  bladeTrail: {fileID: 0}
-  slashVFX: {fileID: 0}
-  defaultMode: 0
 --- !u!65 &4077951710772305050
 BoxCollider:
   m_ObjectHideFlags: 0
