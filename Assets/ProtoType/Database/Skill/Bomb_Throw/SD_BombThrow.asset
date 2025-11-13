@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32cd4292dea2db4294934a4896ea2e5, type: 3}
   m_Name: SD_BombThrow
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
-  skillName: 
-  skillIcon: {fileID: 0}
-  description: 
-  cooldown: 0
+  skillName: "\uD3ED\uD0C4 \uD22C\uCC99"
+  skillIcon: {fileID: 21300000, guid: 21df9195ed43b004394e6d7913b03149, type: 3}
+  description: "\uC784\uC2DC\uB85C \uB9CC\uB4E0 \uD3ED\uD0C4 \uD22C\uCC99 \uC2A4\uD0AC"
+  cooldown: 8
   grade: 0
   hitEffect: 0
-  logicPrefab: {fileID: 0}
+  logicPrefab: {fileID: 511012186284017115, guid: a50d480236e280c40bb7737fe8a105d9, type: 3}
