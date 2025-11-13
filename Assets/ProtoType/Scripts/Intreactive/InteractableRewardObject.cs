@@ -25,6 +25,9 @@ public class InteractableRewardObject : MonoBehaviour
     [SerializeField, Tooltip("상호작용 시 드랍할 아이템 프리팹")]
     private GameObject rewardItemPrefab;
 
+    [SerializeField, Tooltip("이 오브젝트가 드랍할 실제 스킬 데이터 (예: SD_BombThrow)")]
+    private SkillData skillToDrop;
+
     [SerializeField, Tooltip("아이템 드랍 위치")]
     private Transform spawnPoint;
 
@@ -109,7 +112,7 @@ public class InteractableRewardObject : MonoBehaviour
         ShowInteractionUI(false);
 
         // 2. 보상 드랍 (스킬 드랍 유형)
-        if (rewardItemPrefab != null)
+        if (rewardItemPrefab != null && skillToDrop != null)
         {
             SpawnRewardItem();
         }
@@ -132,6 +135,14 @@ public class InteractableRewardObject : MonoBehaviour
     /// </summary>
     private void SpawnRewardItem()
     {
-        Instantiate(rewardItemPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject droppedItemInstance = Instantiate(rewardItemPrefab, spawnPoint.position, Quaternion.identity);
+
+        DroppedSkillItem skillItemLogic = droppedItemInstance.GetComponent<DroppedSkillItem>();
+
+        if (skillItemLogic != null)
+        {
+            // 3. 스크립트에 '어떤 스킬인지' 데이터 전달
+            skillItemLogic.Initialize(skillToDrop);
+        }
     }
 }

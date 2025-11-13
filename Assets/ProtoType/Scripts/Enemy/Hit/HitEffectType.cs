@@ -6,5 +6,6 @@ public enum HitEffectType
     Slashing_Flash,
     QSkill,
     ESkill,
-    RSkill
+    RSkill,
+    Explosion_Bomb
 }
