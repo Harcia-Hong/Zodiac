@@ -28,6 +28,9 @@ public class Enemy : MonoBehaviour
     public GameObject damageTextPrefab;
     public Transform hpAnchor;
 
+    [Header("Effect References")]
+    [SerializeField] private EnemyHitEffectManager hitEffectManager;
+
     // 컴포넌트 참조들 (public으로 StateMachine에서 접근 가능)
     public Rigidbody rigid { get; private set; }
     public BoxCollider boxCollider { get; private set; }
@@ -60,6 +63,11 @@ public class Enemy : MonoBehaviour
     {
         InitializeComponents();
         InitializeStateMachine();
+
+        if(hitEffectManager == null)
+        {
+            hitEffectManager = GetComponent<EnemyHitEffectManager>();
+        }
     }
 
     private void Start()
@@ -383,12 +391,17 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 스킬 데미지 받기
     /// </summary>
-    public void ApplySkillDamage(int damage)
+    public void ApplySkillDamage(int damage, HitEffectType effectType)
     {
         Vector3 reactVec = stateMachine.Target != null
             ? transform.position - stateMachine.Target.position
             : -transform.forward;
         reactVec.y = 0f;
+
+        if (hitEffectManager != null)
+        {
+            hitEffectManager.PlayHitEffect(effectType, transform.position, -reactVec.normalized);
+        }
 
         TakeDamage(damage, reactVec);
     }

@@ -242,7 +242,7 @@ public class PlayerGroundAttack : MonoBehaviour
                 // 데미지 계산 (마지막 공격은 2배)
                 int damage = weapon.GetDamage();
                 // 데미지 적용
-                enemy.ApplySkillDamage(damage);
+                enemy.ApplySkillDamage(damage, HitEffectType.Slashing_Normal);
                 hitEnemies.Add(enemyObj);
 
                 Debug.Log($"[PlayerGroundAttack] {enemy.name}에게 {damage} 데미지!");

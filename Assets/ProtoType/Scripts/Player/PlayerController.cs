@@ -109,6 +109,9 @@ public class PlayerController : MonoBehaviour
 
     void Turn()
     {
+        if (playerGroundAttack != null && playerGroundAttack.isGroundAttacking)
+            return;
+
         if (combatStateMachine != null && combatStateMachine.IsInAction())
         {
             // 공격/스킬 중: 마우스 방향으로 부드럽게 회전

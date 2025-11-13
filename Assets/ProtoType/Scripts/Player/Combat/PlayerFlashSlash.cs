@@ -343,7 +343,7 @@ public class PlayerFlashSlash : MonoBehaviour
         }
 
         // Enemy의 ApplySkillDamage 호출
-        enemy.ApplySkillDamage(finalDamage);
+        enemy.ApplySkillDamage(finalDamage, HitEffectType.Slashing_Flash);
 
         Debug.Log($"[PlayerFlashSlash] {enemy.name}에게 {finalDamage} 데미지!");
     }

@@ -323,7 +323,7 @@ public class PlayerSwordSkill : MonoBehaviour
                 if (enemy != null && !hitTargets.Contains(enemy))
                 {
                     hitTargets.Add(enemy);
-                    enemy.ApplySkillDamage(qSkillDamage);
+                    enemy.ApplySkillDamage(qSkillDamage, HitEffectType.QSkill);
                 }
             }
 
@@ -470,7 +470,7 @@ public class PlayerSwordSkill : MonoBehaviour
             Enemy enemy = col.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.ApplySkillDamage(eSkillDamage);
+                enemy.ApplySkillDamage(eSkillDamage, HitEffectType.ESkill);
             }
         }
 

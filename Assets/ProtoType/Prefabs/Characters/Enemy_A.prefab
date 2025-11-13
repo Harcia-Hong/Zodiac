@@ -2375,6 +2375,7 @@ GameObject:
   - component: {fileID: 339924158608875272}
   - component: {fileID: -1361501283180704393}
   - component: {fileID: -6290944652948824305}
+  - component: {fileID: 694129920736204006}
   m_Layer: 7
   m_Name: Enemy_A
   m_TagString: Enemy
@@ -2499,6 +2500,7 @@ MonoBehaviour:
   hpUIPrefab: {fileID: 1108042093652215267, guid: 5e44d6c5db126e04ea5f874ca61ccba5, type: 3}
   damageTextPrefab: {fileID: 4593688176396601929, guid: 8f820efc4d8c1ea4fb5ebe5eb64446e3, type: 3}
   hpAnchor: {fileID: 4933864727237013812}
+  hitEffectManager: {fileID: 694129920736204006}
   isHit: 0
   isGroggy: 0
   isDead: 0
@@ -2573,6 +2575,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHitReactionSystem
   hitStunDuration: 0.3
   hitColor: {r: 0.49056602, g: 0.44197223, b: 0.44197223, a: 1}
+--- !u!114 &694129920736204006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9223323074315779267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed00ff47003e49c4dbcbf249d6490cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHitEffectManager
+  hitEffectList:
+  - effectType: 0
+    effectPrefab: {fileID: 5290995615312210217, guid: 6316a7b87c5e7fe47a52ab972cbe5ec8, type: 3}
+  - effectType: 1
+    effectPrefab: {fileID: 2585137204373214539, guid: 82eb2380e8f93e64b9f170537430be84, type: 3}
+  defaultDestroyTime: 3
 --- !u!1001 &9211056027342259910
 PrefabInstance:
   m_ObjectHideFlags: 0
