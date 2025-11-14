@@ -73,7 +73,7 @@ public class DroppedSkillItem : MonoBehaviour
         // --- F키 (교체) 처리 ---
         if (Input.GetKeyDown(interactKey))
         {
-            StartSwapProcess();
+            AttemptEquipOrSwap();
         }
 
         // --- G키 (분해) 처리 ---
@@ -103,17 +103,21 @@ public class DroppedSkillItem : MonoBehaviour
     /// <summary>
     /// F키: 스킬 교체 프로세스 시작
     /// </summary>
-    private void StartSwapProcess()
+    private void AttemptEquipOrSwap()
     {
         if (skillData == null) return;
 
-        if (playerSkillManager != null)
+        if (playerSkillManager == null) return;
+
+        bool equipSuccess = playerSkillManager.AutoEquipSkill(skillData);
+
+        if (equipSuccess) Destroy(gameObject);
+        else
         {
             playerSkillManager.StartSwapProcess(this);
+
+            ShowInteractionUI(false);
         }
-
-        Debug.Log($"[DroppedSkillItem] '{skillData.skillName}' 스킬 교체 시작!");
-
         // TODO:
         // 1. Player의 SkillManager.cs 스크립트 참조 가져오기
         // 2. SkillManager.ShowSwapUI(skillData) 호출

@@ -18,10 +18,66 @@ public class CombatUIManager : MonoBehaviour
     [Header("Item Slots")]
     public Image[] itemIcons;
 
+    [Header("UI Expansion (Ctrl Key)")]
+    [Tooltip("Ctrl키를 눌렀을 때 나타나는 플레이어 상세 정보창")]
+    [SerializeField] private GameObject playerStatsPanel;
+
+    [Tooltip("스킬 슬롯(RMB, Q, E, R, T, LMB)을 감싸는 부모 RectTransform")]
+    [SerializeField] private RectTransform skillBarContainer;
+
+    [Tooltip("확장 시 적용할 배율")]
+    [SerializeField] private float expandedScale = 1.2f;
+
+    private Vector3 originalSkillBarScale;
+    private bool isExpanded = false;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        if (skillBarContainer != null)
+            originalSkillBarScale = skillBarContainer.localScale;
+        if (playerStatsPanel != null)
+            playerStatsPanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+            if (!isExpanded) ExpandUI(true);
+            else
+            if (isExpanded) ExpandUI(false);
+    }
+
+    private void ExpandUI(bool expand)
+    {
+        isExpanded = expand;
+
+        // 1. 플레이어 상세 정보창 활성화/비활성화
+        if (playerStatsPanel != null)
+        {
+            playerStatsPanel.SetActive(expand);
+        }
+
+        // 2. 스킬 바 스케일 변경
+        if (skillBarContainer != null)
+        {
+            // (개선) DOTween이 있다면 부드럽게 스케일링 (예: skillBarContainer.DOScale(targetScale, 0.2f);)
+            // 지금은 즉시 변경
+            if (expand)
+            {
+                skillBarContainer.localScale = originalSkillBarScale * expandedScale;
+            }
+            else
+            {
+                skillBarContainer.localScale = originalSkillBarScale;
+            }
+        }
+
+        // 3. (중요) 확장 상태일 때만 스킬 슬롯이 마우스 클릭/드래그 이벤트를 받도록 설정
+        // 이 로직은 4단계에서 SkillSlotUI.cs가 구현될 때 추가됩니다.
+        // 예: foreach(SkillSlotUI slot in allSkillSlots) { slot.SetManageable(expand); }
     }
 
     public void SetSkillIcon(int index, Sprite icon)

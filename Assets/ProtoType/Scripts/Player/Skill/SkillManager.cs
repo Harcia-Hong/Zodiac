@@ -18,7 +18,13 @@ public class SkillManager : MonoBehaviour
     public KeyCode slotEKey = KeyCode.E;
     public KeyCode slotRKey = KeyCode.R;
     public KeyCode slotTKey = KeyCode.T;
-    
+
+    private KeyCode[] manageableSlots;
+
+    [Header("아이템 드랍 설정")]
+    [Tooltip("바닥에 드랍할 스킬 아이템 프리펩 (DroppedSkillItem.cs 포함이에욘ㅇㅇ)")]
+    [SerializeField] private GameObject droppedSkillItemPrefab;
+
     // 현재 교체 중인 스킬 아이템 (임시 저장)
     private DroppedSkillItem pendingSkillToSwap;
 
@@ -30,6 +36,8 @@ public class SkillManager : MonoBehaviour
         equippedSkills[slotEKey] = null;
         equippedSkills[slotRKey] = null;
         equippedSkills[slotTKey] = null;
+
+        manageableSlots = new KeyCode[] { slotQKey, slotEKey, slotRKey };
     }
 
     void Update()
@@ -63,9 +71,9 @@ public class SkillManager : MonoBehaviour
         if (equippedSkills.TryGetValue(key, out SkillData skillToUse) && skillToUse != null)
         {
             // TODO: 쿨다운 체크 로직 추가
-            
+
             Debug.Log($"[SkillManager] {key}키 스킬 '{skillToUse.skillName}' 발동!");
-            
+
             // 1. 스킬 데이터에서 '로직 프리팹' 정보를 가져옴
             GameObject logicPrefab = skillToUse.logicPrefab;
             if (logicPrefab == null)
@@ -83,7 +91,7 @@ public class SkillManager : MonoBehaviour
             {
                 // 4. 스킬 발동! (owner로 플레이어 게임오브젝트 전달)
                 skillLogic.Activate(this.gameObject);
-                
+
                 // TODO: 쿨다운 시작 로직 추가
                 // StartCooldown(key, skillToUse.cooldown);
             }
@@ -92,7 +100,7 @@ public class SkillManager : MonoBehaviour
                 Debug.LogError($"'{logicPrefab.name}'에 ISkillLogic.cs를 구현한 스크립트가 없습니다!");
                 Destroy(logicInstance); // 로직이 없으므로 파괴
             }
-            
+
             // (참고: 로직 프리팹(logicInstance)은 자신의 임무가 끝나면 스스로를 파괴해야 함)
         }
         else
@@ -100,7 +108,90 @@ public class SkillManager : MonoBehaviour
             Debug.Log($"[SkillManager] {key}키 슬롯이 비어있습니다.");
         }
     }
-    
+
+    // -------------------------------------------------------------------
+    // -- 1단계 : 빈 슬롯에 스킬 자동 장착 -> F키로 습득 시 ㅇㅇ
+    // -------------------------------------------------------------------
+    public bool AutoEquipSkill(SkillData skillData)
+    {
+        foreach (KeyCode key in manageableSlots)
+        {
+            if (equippedSkills.TryGetValue(key, out SkillData currentSkill) && currentSkill == null)
+            {
+                equippedSkills[key] = skillData;
+                // TODO : UI 갱신
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 지정된 슬롯(Q, E, R)의 스킬을 장착 해제, 바닥에 버려잇 (Ctrl+클릭용)
+    /// </summary>
+    public void UnequipSkill(KeyCode slotKey)
+    {
+        if (!IsManageableSlot(slotKey))
+            return;
+
+        if (equippedSkills.TryGetValue(slotKey, out SkillData oldSkill) && oldSkill != null)
+        {
+            equippedSkills[slotKey] = null;
+            DropSkill(oldSkill); // 바닥에 기존 스킬 아이템 생성
+
+            // TODO : UI 갱신 
+        }
+    }
+
+    /// <summary>
+    /// 두 슬롯(Q, E, R)의 스킬을 서로 변경!!. (Ctrl+드래그 스왑용)
+    /// </summary>
+    public void SwapSkills(KeyCode fromKey, KeyCode toKey)
+    {
+        if (!IsManageableSlot(fromKey) || !IsManageableSlot(toKey))
+            return;
+
+        // 딕셔너리에서 데이터 임시 추출
+        equippedSkills.TryGetValue(fromKey, out SkillData fromSkill);
+        equippedSkills.TryGetValue(toKey, out SkillData toSkill);
+
+        // 딕셔너리에 데이터 스왑
+        equippedSkills[fromKey] = toSkill;
+        equippedSkills[toKey] = fromSkill;
+
+        // TODO : UI 갱신 ( 변경된 양쪽 슬롯 모두 )
+    }
+
+    /// <summary>
+    /// 스킬 데이터를 받아 바닥에 아이템을 생성
+    /// </summary>
+    private void DropSkill(SkillData skillToDrop)
+    {
+        if (skillToDrop == null) return;
+
+        if (droppedSkillItemPrefab == null) return;
+
+        // 플레이어 코 앞에 생성
+        Vector3 spawnPos = transform.position + transform.forward * 1f;
+
+        GameObject droppedItem = Instantiate(droppedSkillItemPrefab, spawnPos, Quaternion.identity);
+
+        // 드랍된 아이템에 스킬 데이터도 전달해야죠 ㅇㅇ
+        DroppedSkillItem itemLogic = droppedItem.GetComponent<DroppedSkillItem>();
+        if (itemLogic != null)
+            itemLogic.Initialize(skillToDrop);
+        else
+            Debug.LogError($"[SkillManager] {droppedSkillItemPrefab.name}에 DroppedSkillItem 스크립트가 없습니다!");
+    }
+
+    /// <summary>
+    /// 해당 키가 Q, E, R 중 하나인지 확인하는 헬퍼 함수
+    /// </summary>
+    private bool IsManageableSlot(KeyCode key)
+    {
+        return key == slotQKey || key == slotEKey || key == slotRKey;
+    }
+
     // -------------------------------------------------------------------
     // -- 2/3단계: 스킬 교체 로직
     // -------------------------------------------------------------------
@@ -112,8 +203,8 @@ public class SkillManager : MonoBehaviour
     {
         pendingSkillToSwap = itemToSwap;
         
-        // TODO: "Q, E, R, T 중 교체할 슬롯을 선택하세요" UI 활성화
-        Debug.Log($"[SkillManager] 교체 시작: '{itemToSwap.GetSkillData().skillName}'. Q,E,R,T 중 선택...");
+        // TODO: "Q, E, R 중 교체할 슬롯을 선택하세요" UI 활성화
+        Debug.Log($"[SkillManager] 교체 시작: '{itemToSwap.GetSkillData().skillName}'. Q,E,R 중 선택...");
     }
 
     /// <summary>
@@ -124,7 +215,6 @@ public class SkillManager : MonoBehaviour
         if (Input.GetKeyDown(slotQKey)) FinalizeSwap(slotQKey);
         if (Input.GetKeyDown(slotEKey)) FinalizeSwap(slotEKey);
         if (Input.GetKeyDown(slotRKey)) FinalizeSwap(slotRKey);
-        if (Input.GetKeyDown(slotTKey)) FinalizeSwap(slotTKey);
 
         // TODO: 교체 취소 (Esc 등) 로직 추가
     }
@@ -135,6 +225,9 @@ public class SkillManager : MonoBehaviour
     private void FinalizeSwap(KeyCode selectedKey)
     {
         if (pendingSkillToSwap == null) return;
+
+        if (!IsManageableSlot(selectedKey))
+            return;
 
         SkillData newSkill = pendingSkillToSwap.GetSkillData();
         SkillData oldSkill = equippedSkills[selectedKey]; // 기존에 장착되어 있던 스킬 (null일 수도 있음)
@@ -149,8 +242,9 @@ public class SkillManager : MonoBehaviour
         if (oldSkill != null)
         {
             Debug.Log($"[SkillManager] 기존 스킬 '{oldSkill.skillName}'을(를) 바닥에 드랍합니다.");
-            
+
             // TODO: 'DroppedSkill_Prefab'을 바닥에 생성하고,
+            DropSkill(oldSkill);
             // 그 프리팹의 Initialize(oldSkill)을 호출하는 로직 필요.
             // (이 로직은 DroppedSkillItem.cs의 Altar가 하던 것과 유사)
         }
