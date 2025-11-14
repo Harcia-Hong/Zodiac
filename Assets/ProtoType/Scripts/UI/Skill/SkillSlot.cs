@@ -15,6 +15,8 @@ public class SkillSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [Header("UI 참조")]
     [Tooltip("스킬 아이콘을 표시할 Image 컴포넌트")]
     [SerializeField] private Image skillIconImage;
+    [Tooltip("쿨다운 오버레이 Image 컴포넌트")]
+    [SerializeField] private Image cooldownOverlayImage;
     [Tooltip("비어있을 때 표시할 기본 아이콘 (옵션)")]
     [SerializeField] private Sprite defaultIcon;
 
@@ -68,11 +70,13 @@ public class SkillSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             skillIconImage.sprite = currentSkill.skillIcon;
             skillIconImage.color = Color.white;
+            skillIconImage.enabled = true;
         }
         else
         {
             skillIconImage.sprite = defaultIcon;
             skillIconImage.color = new Color(1, 1, 1, 0.5f); // 비어있으면 반투명
+            skillIconImage.enabled = (defaultIcon != null);
         }
     }
 
@@ -97,9 +101,10 @@ public class SkillSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerClick(PointerEventData eventData)
     {
         // 드래그가 끝났을 때도 Click 이벤트가 호출될 수 있으므로, 드래그 중이 아닐 때만
-        if (isManageable && currentSkill != null && slotBeingDragged == null)
+        if (isManageable && currentSkill != null && slotBeingDragged == null && eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log($"[SkillSlotUI] {slotKey} 슬롯 클릭: 스킬 버리기");
+            skillTooltip?.Hide();
             skillManager.UnequipSkill(slotKey);
         }
     }
@@ -107,11 +112,14 @@ public class SkillSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // --- 3. 드래그 앤 드롭 (사진 4) ---
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+
         // 관리 모드이고, 빈 슬롯이 아니고, 다른 드래그가 없을 때만
         if (isManageable && currentSkill != null && slotBeingDragged == null)
         {
             // 드래그 시작
             slotBeingDragged = this;
+            skillTooltip?.Hide();
 
             // 마우스를 따라다닐 임시 아이콘 생성
             dragIconInstance = new GameObject("DragIcon");
@@ -158,7 +166,7 @@ public class SkillSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
             // 2. 드롭 대상 확인
             // eventData.pointerEnter는 마우스 포인터가 마지막으로 올라가 있던 오브젝트
-            SkillSlotUI dropTargetSlot = eventData.pointerEnter?.GetComponent<SkillSlotUI>();
+            SkillSlotUI dropTargetSlot = (eventData.pointerEnter != null) ? eventData.pointerEnter.GetComponent<SkillSlotUI>() : null;
 
             if (dropTargetSlot == null || dropTargetSlot == this)
             {
@@ -178,5 +186,10 @@ public class SkillSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public KeyCode GetSlotKey()
     {
         return slotKey;
+    }
+
+    public Image GetCooldownOverlayImage()
+    {
+        return cooldownOverlayImage;
     }
 }
