@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// 바닥에 드랍된 스킬 아이템의 로직.
@@ -17,6 +18,12 @@ public class DroppedSkillItem : MonoBehaviour
     private KeyCode interactKey = KeyCode.F; // 교체 키
     [SerializeField]
     private KeyCode disassembleKey = KeyCode.G; // 분해 키
+
+    [Header("UI 텍스트")]
+    [SerializeField]
+    private TextMeshProUGUI skillNameText;
+    [SerializeField]
+    private TextMeshProUGUI keysText;
 
     [Header("분해 설정")]
     [SerializeField]
@@ -40,6 +47,7 @@ public class DroppedSkillItem : MonoBehaviour
     {
         skillData = dataToHold;
 
+        UpdateUIText();
         // TODO: skillData.skillIcon을 사용해서 바닥에 보이는 아이콘 모양 변경
     }
 
@@ -105,9 +113,7 @@ public class DroppedSkillItem : MonoBehaviour
     /// </summary>
     private void AttemptEquipOrSwap()
     {
-        if (skillData == null) return;
-
-        if (playerSkillManager == null) return;
+        if (skillData == null || playerSkillManager == null) return;
 
         bool equipSuccess = playerSkillManager.AutoEquipSkill(skillData);
 
@@ -148,7 +154,20 @@ public class DroppedSkillItem : MonoBehaviour
         if (interactionPromptUI != null)
         {
             // TODO: UI 텍스트에 skillData.skillName 등을 표시
+            if (show)
+                UpdateUIText();
             interactionPromptUI.SetActive(show);
         }
+    }
+
+    private void UpdateUIText()
+    {
+        if (skillData == null) return;
+
+        if (skillNameText != null)
+            skillNameText.text = skillData.skillName;
+
+        if (keysText != null)
+            keysText.text = "F - 장착 / G - 분해";
     }
 }

@@ -11,6 +11,7 @@ public class SkillManager : MonoBehaviour
     [Header("스킬 슬롯")]
     // 현재 장착된 스킬 데이터를 관리합니다.
     private Dictionary<KeyCode, SkillData> equippedSkills = new Dictionary<KeyCode, SkillData>();
+    private Dictionary<KeyCode, float> skillCooldowns = new Dictionary<KeyCode, float>();
 
     [Header("슬롯 키 설정")]
     // (나중에 UI와 연동할 때 이 부분은 더 복잡해질 수 있음)
@@ -18,6 +19,8 @@ public class SkillManager : MonoBehaviour
     public KeyCode slotEKey = KeyCode.E;
     public KeyCode slotRKey = KeyCode.R;
     public KeyCode slotTKey = KeyCode.T;
+    public KeyCode slotLMBKey = KeyCode.Mouse0;
+    public KeyCode slotRMBKey = KeyCode.Mouse1;
 
     private KeyCode[] manageableSlots;
 
@@ -28,16 +31,37 @@ public class SkillManager : MonoBehaviour
     // 현재 교체 중인 스킬 아이템 (임시 저장)
     private DroppedSkillItem pendingSkillToSwap;
 
+    private CombatUIManager uiManager;
+
     // --- (임시: 테스트용) ---
     private void Start()
     {
+        InitializeSlots();
+
+        manageableSlots = new KeyCode[] { slotQKey, slotEKey, slotRKey };
+        uiManager = CombatUIManager.Instance;
+        if (uiManager == null) Debug.LogError("[SkillManager] 씬에 CombatUIManager.Instance가 없습니다!");
+    }
+
+    private void InitializeSlots()
+    {
+        manageableSlots = new KeyCode[] { slotQKey, slotEKey, slotRKey };
+
         // 딕셔너리 초기화
         equippedSkills[slotQKey] = null;
         equippedSkills[slotEKey] = null;
         equippedSkills[slotRKey] = null;
         equippedSkills[slotTKey] = null;
+        equippedSkills[slotLMBKey] = null;
+        equippedSkills[slotRMBKey] = null;
 
-        manageableSlots = new KeyCode[] { slotQKey, slotEKey, slotRKey };
+        // 쿨다운 딕셔너리 초기화 (모든 키를 0 (즉시 사용 가능)으로 설정)
+        skillCooldowns[slotQKey] = 0f;
+        skillCooldowns[slotEKey] = 0f;
+        skillCooldowns[slotRKey] = 0f;
+        skillCooldowns[slotTKey] = 0f;
+        skillCooldowns[slotLMBKey] = 0f;
+        skillCooldowns[slotRMBKey] = 0f;
     }
 
     void Update()
@@ -68,6 +92,8 @@ public class SkillManager : MonoBehaviour
     /// </summary>
     private void TryActivateSkill(KeyCode key)
     {
+        if (IsSkillOnCooldown(key)) return;
+
         if (equippedSkills.TryGetValue(key, out SkillData skillToUse) && skillToUse != null)
         {
             // TODO: 쿨다운 체크 로직 추가
@@ -84,16 +110,16 @@ public class SkillManager : MonoBehaviour
 
             // 2. 로직 프리팹을 씬에 생성
             GameObject logicInstance = Instantiate(logicPrefab);
-
             // 3. 생성된 프리팹에서 ISkillLogic 인터페이스를 찾음
             ISkillLogic skillLogic = logicInstance.GetComponent<ISkillLogic>();
+
             if (skillLogic != null)
             {
                 // 4. 스킬 발동! (owner로 플레이어 게임오브젝트 전달)
                 skillLogic.Activate(this.gameObject);
 
                 // TODO: 쿨다운 시작 로직 추가
-                // StartCooldown(key, skillToUse.cooldown);
+                StartCooldown(key, skillToUse.cooldown);
             }
             else
             {
@@ -109,6 +135,23 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+    private bool IsSkillOnCooldown(KeyCode key)
+    {
+        return skillCooldowns.TryGetValue(key, out float cooldownEndTime) && Time.time < cooldownEndTime;
+    }
+
+    private void StartCooldown(KeyCode key, float duration)
+    {
+        skillCooldowns[key] = Time.time + duration;
+        uiManager?.StartSkillCoolDown(key, duration);
+    }
+
+    private void ResetCooldown(KeyCode key)
+    {
+        skillCooldowns[key] = 0f;
+        // TODO
+    }
+
     // -------------------------------------------------------------------
     // -- 1단계 : 빈 슬롯에 스킬 자동 장착 -> F키로 습득 시 ㅇㅇ
     // -------------------------------------------------------------------
@@ -119,7 +162,9 @@ public class SkillManager : MonoBehaviour
             if (equippedSkills.TryGetValue(key, out SkillData currentSkill) && currentSkill == null)
             {
                 equippedSkills[key] = skillData;
+                ResetCooldown(key);
                 // TODO : UI 갱신
+                uiManager?.UpdateSkillSlot(key, skillData);
                 return true;
             }
         }
@@ -136,10 +181,12 @@ public class SkillManager : MonoBehaviour
 
         if (equippedSkills.TryGetValue(slotKey, out SkillData oldSkill) && oldSkill != null)
         {
-            equippedSkills[slotKey] = null;
+            equippedSkills[slotKey] = null; 
             DropSkill(oldSkill); // 바닥에 기존 스킬 아이템 생성
 
-            // TODO : UI 갱신 
+            // TODO : UI 갱신
+            ResetCooldown(slotKey); // 플레이 해보고 악용의 요지가 있을 경우 개편
+            uiManager?.UpdateSkillSlot(slotKey, null);
         }
     }
 
@@ -151,6 +198,8 @@ public class SkillManager : MonoBehaviour
         if (!IsManageableSlot(fromKey) || !IsManageableSlot(toKey))
             return;
 
+        if (fromKey == toKey) return;
+
         // 딕셔너리에서 데이터 임시 추출
         equippedSkills.TryGetValue(fromKey, out SkillData fromSkill);
         equippedSkills.TryGetValue(toKey, out SkillData toSkill);
@@ -159,7 +208,16 @@ public class SkillManager : MonoBehaviour
         equippedSkills[fromKey] = toSkill;
         equippedSkills[toKey] = fromSkill;
 
+        // 쿨타임이 돌고 있었다면, 그 쿨타임도 함께 따라갑니다.
+        skillCooldowns.TryGetValue(fromKey, out float fromCooldownEndTime);
+        skillCooldowns.TryGetValue(toKey, out float toCooldownEndTime);
+
+        skillCooldowns[fromKey] = toCooldownEndTime;
+        skillCooldowns[toKey] = fromCooldownEndTime;
+
         // TODO : UI 갱신 ( 변경된 양쪽 슬롯 모두 )
+        uiManager?.UpdateSkillSlot(fromKey, toSkill);
+        uiManager?.UpdateSkillSlot(toKey, fromSkill);
     }
 
     /// <summary>
@@ -167,9 +225,7 @@ public class SkillManager : MonoBehaviour
     /// </summary>
     private void DropSkill(SkillData skillToDrop)
     {
-        if (skillToDrop == null) return;
-
-        if (droppedSkillItemPrefab == null) return;
+        if (skillToDrop == null || droppedSkillItemPrefab == null) return;
 
         // 플레이어 코 앞에 생성
         Vector3 spawnPos = transform.position + transform.forward * 1f;
@@ -178,6 +234,7 @@ public class SkillManager : MonoBehaviour
 
         // 드랍된 아이템에 스킬 데이터도 전달해야죠 ㅇㅇ
         DroppedSkillItem itemLogic = droppedItem.GetComponent<DroppedSkillItem>();
+
         if (itemLogic != null)
             itemLogic.Initialize(skillToDrop);
         else
@@ -205,6 +262,9 @@ public class SkillManager : MonoBehaviour
         
         // TODO: "Q, E, R 중 교체할 슬롯을 선택하세요" UI 활성화
         Debug.Log($"[SkillManager] 교체 시작: '{itemToSwap.GetSkillData().skillName}'. Q,E,R 중 선택...");
+
+        // [수정] 교체 시에도 Ctrl UI 확장 (임시)
+        uiManager?.ExpandUI(true);
     }
 
     /// <summary>
@@ -217,6 +277,19 @@ public class SkillManager : MonoBehaviour
         if (Input.GetKeyDown(slotRKey)) FinalizeSwap(slotRKey);
 
         // TODO: 교체 취소 (Esc 등) 로직 추가
+        if (Input.GetKeyDown(KeyCode.Escape)) CancelSwapProcess();
+    }
+
+    private void CancelSwapProcess()
+    {
+        Debug.Log("[SkillManager] 스킬 교체를 취소했습니다.");
+        pendingSkillToSwap = null;
+
+        // Ctrl 키가 안 눌려있다면 UI 원상복구
+        if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))
+        {
+            uiManager?.ExpandUI(false);
+        }
     }
 
     /// <summary>
@@ -234,7 +307,9 @@ public class SkillManager : MonoBehaviour
 
         // 1. 새 스킬을 슬롯에 장착
         equippedSkills[selectedKey] = newSkill;
+        ResetCooldown(selectedKey);
         // TODO: UI 갱신 - selectedKey 슬롯의 아이콘을 newSkill.skillIcon으로 변경
+        uiManager?.UpdateSkillSlot(selectedKey, newSkill);
 
         Debug.Log($"[SkillManager] {selectedKey} 슬롯에 '{newSkill.skillName}' 장착!");
 
@@ -254,5 +329,7 @@ public class SkillManager : MonoBehaviour
         pendingSkillToSwap = null;
 
         // TODO: 교체 선택 UI 닫기
+        if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))
+            uiManager?.ExpandUI(false);
     }
 }

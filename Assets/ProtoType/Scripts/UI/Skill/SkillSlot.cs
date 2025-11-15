@@ -39,6 +39,15 @@ public class SkillSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         // 툴팁 UI를 찾습니다. (씬에 하나만 있다고 가정)
         skillTooltip = FindFirstObjectByType<SkillTooltipUI>(FindObjectsInactive.Include);
 
+        if (skillManager == null)
+        {
+            Debug.LogError($"[SkillSlotUI] {slotKey} 슬롯이 SkillManager를 찾을 수 없습니다! 씬에 Player가 있는지 확인하세요.");
+        }
+        if (skillTooltip == null)
+        {
+            Debug.LogWarning($"[SkillSlotUI] {slotKey} 슬롯이 SkillTooltipUI를 찾을 수 없습니다! 씬에 SkillToolTip_Panel이 있는지 확인하세요.");
+        }
+
         if (rootCanvas == null)
         {
             rootCanvas = GetComponentInParent<Canvas>().rootCanvas;
